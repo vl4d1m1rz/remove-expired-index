@@ -5,41 +5,30 @@
 usage()
 {
 cat << EOF
-
 remove-expired-index.sh
-
 Delete all indices older than a date.
-
-
 USAGE: ./remove-expired-index.sh [OPTIONS]
-
 OPTIONS:
   -h    Show this message
   -d    Expiration date (YYYY-MM-dd) from when we should start deleting the indices (default: 3 days ago)
   -e    Elasticsearch URL (default: http://localhost:9200)
   -g    Consistent index name (default: logstash)
   -o    Output actions to a specified file
-
 EXAMPLES:
-
   ./remove-expired-index.sh
-
     Connect to http://localhost:9200 and get a list of indices matching
-    'logstash'. Keep the indices from less than 3 months, delete any others.
-
+    'logstash'. Keep the indices from less than 30 days, delete any others.
   ./remove-expired-index.sh -e "http://es.example.com:9200" \
   -d 1991-04-25 -g my-logs -o /mnt/es/logfile.log
-
     Connect to http://es.example.com:9200 and get a list of indices matching
     'my-logs'. Keep the indices created after the 25 april 1991, delete any others.
     Output index deletes to /mnt/es/logfile.log.
-
 EOF
 }
 
 # Defaults
-ELASTICSEARCH="http://es.example.com:9200"
-DATE=$(date  --date="3 days ago" +"%Y%m%d")
+ELASTICSEARCH="http://localhost:9200"
+DATE=$(date  --date="30 days ago" +"%Y%m%d")
 INDEX_NAME="logstash"
 LOGFILE=/dev/null
 
